@@ -1,43 +1,98 @@
-const int ledPin1 = 10;
-const int ledPin2 = 11;
-const int ledPin3 = 13;
+#include <ArduinoJson.h>
+const int TAMANHO = 200;
+
+int Vo;
+float R1 = 10000;
+float logR2, R2, L2, T, Tc, Tf, temp, light, wind;
+float a = 0.6904626097e-03, b = 2.890757430e-04, c = 0.01366717388e-07; 
+
+
+int ldr = A0;
+int tmp = A1;
+int vnt = 2;
 
 void setup(){
-  //-------------- Confitura pinos de saida -----//
-
-  pinMode(ledPin1,OUTPUT);                             //  Configura o pino 13 do arduino como saida(OUTPUT)              
-  pinMode(ledPin2,OUTPUT); 
-  pinMode(ledPin3,OUTPUT); 
-
-  //---------------Configura pinos de entrada ------//
-
-  pinMode(2,INPUT_PULLUP);                        //  Configura o pino 2 do arduino como entrada com resistor de pullup interno (assim não precisa mais colocar o resistor no pino)              
-  pinMode(3,INPUT_PULLUP);                        //  Configura o pino 3 do arduino como entrada com resistor de pullup interno (assim não precisa mais colocar o resistor no pino)
-  
-
-  //-----------  Configuração da Interrução ------------------- //                                 
-
-  //attachInterrupt(digitalPinToInterrupt(2),interrupcaoPino2,RISING);  //  Configura o pino2 como interrupção externa do tipo Rising (borda de LOW para HIGH)
-  
+	Serial.begin(115200);
+	pinMode(ldr, INPUT);
+	pinMode(tmp, INPUT);
+	pinMode(vnt, INPUT);
 }
 
-void loop(){  
-  //------- Programa pricipal -----//
+void loop() {
 
-  if (digitalRead(2) == LOW ){
-    digitalWrite(ledPin1,!digitalRead(ledPin1));
-  }
-  if (digitalRead(3) == LOW ){
-    digitalWrite(ledPin2,!digitalRead(ledPin2));
-  }
-  digitalWrite(ledPin3,HIGH);
-  delay(1000);
-  digitalWrite(ledPin3,LOW);
-  delay(1000);
-   
+	StaticJsonDocument<TAMANHO> json;
+	light = readLight(ldr);
+	temp = readTemp(tmp);
+	wind = readWind(vnt);
+	printTempSerial(temp);
+	printLightSerial(light);
+	printWindSerial(wind);
+	json["temp"] = round(temp);
+	json["light"] = round(light);
+	json["vento"] = round(wind);
+	
+	serializeJson(json, Serial);
 }
 
-//void interrupcaoPino2()           //funcão de interrupção do pino2, é executado quando o botao do pino2 pressionado
-//{                    
-//  digitalWrite(ledPin1,!digitalRead(ledPin1));
-//}
+float readTemp(int tmp){
+	Vo = analogRead(tmp);
+	R2 = R1 * (1023.0 / (float)Vo - 1.0);
+	logR2 = log(R2);
+	T = (1.0 / (a + b*logR2 + c*logR2*logR2*logR2));
+	Tc = T - 273.15; 
+	return Tc;
+}
+
+void printTempSerial(float Tc){
+	//Serial.print("Temp.: ");
+	//Serial.print(round(Tc));
+	//Serial.println(" C");
+}
+
+float readLight(int ldr) {
+	int adc = analogRead(ldr);
+	float rDark = 100000;
+	float light, RLDR, Vout;
+	float alfa = 1/0.8582;
+	
+	Vout = (adc * 0.0048898525);
+	RLDR = (10000.0 * (5 - Vout))/Vout; 
+	light = pow((rDark/RLDR), alfa);
+	return light;
+}
+
+float readWind(int vtn) {
+	float frequency;
+	int pulseHigh = pulseIn(vtn, HIGH);
+	int pulseLow = pulseIn(vtn, LOW);
+	float pulseTotal = pulseHigh + pulseLow;
+	frequency = 1000000/pulseTotal;
+	return frequency;
+}
+
+void printWindSerial(float wind){
+	Serial.print("Freq.: ");
+	Serial.print(round(wind));
+	Serial.println(" Hz");
+}
+
+void printLightSerial(float light){
+	Serial.print("Lumin.: ");
+	Serial.print(light);
+	Serial.println(" lux");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
