@@ -24,9 +24,9 @@ void loop() {
 	light = readLight(ldr);
 	temp = readTemp(tmp);
 	wind = readWind(vnt);
-	printTempSerial(temp);
-	printLightSerial(light);
-	printWindSerial(wind);
+	//printTempSerial(temp);
+	//printLightSerial(light);
+	//printWindSerial(wind);
 	json["temp"] = round(temp);
 	json["light"] = round(light);
 	json["vento"] = round(wind);
@@ -44,9 +44,9 @@ float readTemp(int tmp){
 }
 
 void printTempSerial(float Tc){
-	//Serial.print("Temp.: ");
-	//Serial.print(round(Tc));
-	//Serial.println(" C");
+	Serial.print("Temp.: ");
+	Serial.print(round(Tc));
+	Serial.println(" C");
 }
 
 float readLight(int ldr) {
