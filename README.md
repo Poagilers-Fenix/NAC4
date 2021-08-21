@@ -7,7 +7,7 @@ This repository has been built for academic purposes, required by FIAP as an per
 
 
 
-<h2>Poágilers</h2>
+## Poágilers
 
 
 
@@ -32,16 +32,18 @@ Larissa Alves da Silva - rm86351
 
 
 
-<h3>Project Description</h3>
+## Project Description
 
 Poá Smart City was built on behalf of weather consulting, trying to improve the users experience. Our team has developed a code that can be loaded onto a microcontroller board to return the necessary information to the <a href="https://nodered.org/">Node-RED</a> flow controller. This information is published in topics through the <a href="https://mqtt.org/">MQTT</a> protocol, and from there anyone can have access.
 
+## How to
+For the Poá Smart City project works correctly, you must have followed the programs and resources:
+- [ ] Node-red with the dependencies (node-red-dashboard, node-red-serialport and node-red-node-twitter)
+- [ ] com0com configured to receive port information COM3 and send to COM4
+- [ ] SimulIDE or Arduino that can connect with MQTT
 
-<h3>How to</h3>
+## Video link
 
 
-<h3>Video link</h3>
-
-
-<h3>References</h3>
+## References
 
