@@ -1,5 +1,6 @@
 #include <ArduinoJson.h>
-const int TAMANHO = 200;
+const int TAMANHO = JSON_OBJECT_SIZE(3);
+StaticJsonDocument<TAMANHO> json;
 
 int Vo;
 float R1 = 10000;
@@ -20,7 +21,6 @@ void setup(){
 
 void loop() {
 
-	StaticJsonDocument<TAMANHO> json;
 	light = readLight(ldr);
 	temp = readTemp(tmp);
 	wind = readWind(vnt);
@@ -29,9 +29,10 @@ void loop() {
 	//printWindSerial(wind);
 	json["temp"] = round(temp);
 	json["light"] = round(light);
-	json["vento"] = round(wind);
-	
+	json["vento"] = round(wind);	
 	serializeJson(json, Serial);
+
+	delay(3000);
 }
 
 float readTemp(int tmp){
@@ -62,7 +63,7 @@ float readLight(int ldr) {
 }
 
 float readWind(int vtn) {
-	float frequency;
+	unsigned long frequency;
 	int pulseHigh = pulseIn(vtn, HIGH);
 	int pulseLow = pulseIn(vtn, LOW);
 	float pulseTotal = pulseHigh + pulseLow;
