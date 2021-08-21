@@ -36,3 +36,12 @@ Larissa Alves da Silva - rm86351
 
 Poá Smart City was built on behalf of weather consulting, trying to improve the users experience. Our team has developed a code that can be loaded onto a microcontroller board to return the necessary information to the <a href="https://nodered.org/">Node-RED</a> flow controller. This information is published in topics through the <a href="https://mqtt.org/">MQTT</a> protocol, and from there anyone can have access.
 
+
+<h3>How to</h3>
+
+
+<h3>Video link</h3>
+
+
+<h3>References</h3>
+
