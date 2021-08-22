@@ -43,11 +43,6 @@ float readTemp(int tmp){
 	return Tc;
 }
 
-void printTempSerial(float Tc){
-	Serial.print("Temp.: ");
-	Serial.print(round(Tc));
-	Serial.println(" C");
-}
 
 float readLight(int ldr) {
 	int adc = analogRead(ldr);
@@ -61,13 +56,13 @@ float readLight(int ldr) {
 	return light;
 }
 
-float readWind(int vtn) {
-	float frequency;
-	int pulseHigh = pulseIn(vtn, HIGH);
-	int pulseLow = pulseIn(vtn, LOW);
+float readWind(int vnt) {
+	float wind;
+	int pulseHigh = pulseIn(vnt, HIGH);
+	int pulseLow = pulseIn(vnt, LOW);
 	float pulseTotal = pulseHigh + pulseLow;
-	frequency = 1000000/pulseTotal;
-	return frequency;
+	wind = 1000000/pulseTotal;
+	return wind;
 }
 
 void printWindSerial(float wind){
@@ -81,7 +76,11 @@ void printLightSerial(float light){
 	Serial.print(light);
 	Serial.println(" lux");
 }
-
+void printTempSerial(float Tc){
+	Serial.print("Temp.: ");
+	Serial.print(round(Tc));
+	Serial.println(" C");
+}
 
 
 
