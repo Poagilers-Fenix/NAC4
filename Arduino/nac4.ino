@@ -32,7 +32,7 @@ void loop() {
 	json["vento"] = round(wind);	
 	serializeJson(json, Serial);
 
-	delay(3000);
+	delay(300);
 }
 
 float readTemp(int tmp){
@@ -57,12 +57,11 @@ float readLight(int ldr) {
 	return light;
 }
 
-float readWind(int vtn) {
-	unsigned long frequency;
-	int pulseHigh = pulseIn(vtn, HIGH);
-	int pulseLow = pulseIn(vtn, LOW);
+float readWind(int vnt) {
+	int pulseHigh = pulseIn(vnt, HIGH);
+	int pulseLow = pulseIn(vnt, LOW, 150);
 	float pulseTotal = pulseHigh + pulseLow;
-	wind = 1000000/pulseTotal;
+	wind = 1000000/pulseTotal;       
 	return wind;
 }
 
