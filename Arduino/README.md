@@ -5,3 +5,6 @@ Arduino: Frequencímetro
 
 https://www.instructables.com/Arduino-Frequency-Counter/
 By Rajkumar2506 in CircuitsArduino
+
+
+https://www.youtube.com/watch?v=tGQ_5120qAs

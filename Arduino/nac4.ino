@@ -8,6 +8,7 @@ float logR2, R2, L2, T, Tc, Tf, temp, light, wind;
 float a = 0.6904626097e-03, b = 2.890757430e-04, c = 0.01366717388e-07; 
 
 
+
 int ldr = A0;
 int tmp = A1;
 int vnt = 2;
@@ -20,13 +21,9 @@ void setup(){
 }
 
 void loop() {
-
 	light = readLight(ldr);
 	temp = readTemp(tmp);
 	wind = readWind(vnt);
-	//printTempSerial(temp);
-	//printLightSerial(light);
-	//printWindSerial(wind);
 	json["temp"] = round(temp);
 	json["light"] = round(light);
 	json["vento"] = round(wind);	
@@ -58,10 +55,12 @@ float readLight(int ldr) {
 }
 
 float readWind(int vnt) {
+	unsigned long tempo;
 	int pulseHigh = pulseIn(vnt, HIGH);
-	int pulseLow = pulseIn(vnt, LOW, 150);
+	int pulseLow = pulseIn(vnt, LOW);
 	float pulseTotal = pulseHigh + pulseLow;
-	wind = 1000000/pulseTotal;       
+	tempo = 1000000;
+	wind = tempo/pulseTotal;       
 	return wind;
 }
 
