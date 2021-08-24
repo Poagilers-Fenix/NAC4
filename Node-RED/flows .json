@@ -1,0 +1,559 @@
+[
+    {
+        "id": "15a1fe22b8720b88",
+        "type": "tab",
+        "label": "nac4",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "009afc5d6a6595f7",
+        "type": "serial in",
+        "z": "15a1fe22b8720b88",
+        "name": "Arduino",
+        "serial": "ac4cdef851c45bc4",
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "a00c23e252250138",
+                "4db95d3dcfe64746",
+                "a9382765f3b5c89b"
+            ]
+        ]
+    },
+    {
+        "id": "54b75c812cfdbf1d",
+        "type": "mqtt out",
+        "z": "15a1fe22b8720b88",
+        "name": "Wind Speed",
+        "topic": "poasmartcity/vel_vento",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "17e66e49.ae383a",
+        "x": 670,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "220efa1227f7c022",
+        "type": "function",
+        "z": "15a1fe22b8720b88",
+        "name": "functionVentoTwitter",
+        "func": "if(msg.payload > 80) {\n    varr = msg.payload;\n    msg.payload =  'Alerta de ventos fortes, a velocidade em Km/h atual do vento é: ' + varr;\n    return msg;\n} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 540,
+        "wires": [
+            [
+                "b0d5db296572969c"
+            ]
+        ]
+    },
+    {
+        "id": "45ed403f30b447a6",
+        "type": "mqtt in",
+        "z": "15a1fe22b8720b88",
+        "name": "Wind Speed",
+        "topic": "poasmartcity/vel_vento",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "17e66e49.ae383a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 190,
+        "y": 600,
+        "wires": [
+            [
+                "88dea6c7117f960a",
+                "220efa1227f7c022"
+            ]
+        ]
+    },
+    {
+        "id": "a00c23e252250138",
+        "type": "function",
+        "z": "15a1fe22b8720b88",
+        "name": "FunctionVento",
+        "func": "p = JSON.parse(msg.payload);\nmsg.payload = p.vento;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "54b75c812cfdbf1d",
+                "13bee3e52bf809ab"
+            ]
+        ]
+    },
+    {
+        "id": "c8914f4a8ddf1c79",
+        "type": "mqtt out",
+        "z": "15a1fe22b8720b88",
+        "name": "Temp",
+        "topic": "poasmartcity/temp",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "17e66e49.ae383a",
+        "x": 650,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ca1a491aa2fd34a0",
+        "type": "mqtt out",
+        "z": "15a1fe22b8720b88",
+        "name": "Lux",
+        "topic": "poasmartcity/lux",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "17e66e49.ae383a",
+        "x": 650,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4db95d3dcfe64746",
+        "type": "function",
+        "z": "15a1fe22b8720b88",
+        "name": "functionTemp",
+        "func": "p = JSON.parse(msg.payload);\nmsg.payload = p.temp;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "c8914f4a8ddf1c79",
+                "f8c79db8410be861"
+            ]
+        ]
+    },
+    {
+        "id": "a9382765f3b5c89b",
+        "type": "function",
+        "z": "15a1fe22b8720b88",
+        "name": "functionLight",
+        "func": "p = JSON.parse(msg.payload);\nmsg.payload = p.light;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [
+                "ca1a491aa2fd34a0",
+                "6c7ae83fe2f1c559"
+            ]
+        ]
+    },
+    {
+        "id": "f764d6f7f09a6792",
+        "type": "mqtt in",
+        "z": "15a1fe22b8720b88",
+        "name": "Temp",
+        "topic": "poasmartcity/temp",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "17e66e49.ae383a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 170,
+        "y": 700,
+        "wires": [
+            [
+                "2d9c1542c83c4ae4"
+            ]
+        ]
+    },
+    {
+        "id": "b0a6f1b4194f8582",
+        "type": "mqtt in",
+        "z": "15a1fe22b8720b88",
+        "name": "Lux",
+        "topic": "poasmartcity/lux",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "17e66e49.ae383a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 170,
+        "y": 780,
+        "wires": [
+            [
+                "12f6cd9aa08c3602"
+            ]
+        ]
+    },
+    {
+        "id": "12f6cd9aa08c3602",
+        "type": "ui_text",
+        "z": "15a1fe22b8720b88",
+        "group": "2b1aa610.3e3f3a",
+        "order": 1,
+        "width": "8",
+        "height": "2",
+        "name": "",
+        "label": "Luminosidade",
+        "format": "{{value}} Lux",
+        "layout": "col-center",
+        "x": 400,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "071f42b8aee208c9",
+        "type": "twitter out",
+        "z": "15a1fe22b8720b88",
+        "twitter": "",
+        "name": "Tweet",
+        "x": 830,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "88dea6c7117f960a",
+        "type": "ui_gauge",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "group": "2b1aa610.3e3f3a",
+        "order": 1,
+        "width": "8",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Velocidade do vento",
+        "label": "units",
+        "format": "{{value}} Km/h",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#a1d987",
+            "#f8db49",
+            "#c74848"
+        ],
+        "seg1": "30",
+        "seg2": "70",
+        "x": 440,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "2d9c1542c83c4ae4",
+        "type": "ui_text",
+        "z": "15a1fe22b8720b88",
+        "group": "2b1aa610.3e3f3a",
+        "order": 3,
+        "width": "8",
+        "height": "2",
+        "name": "",
+        "label": "Temperatura",
+        "format": "{{value}} Cº",
+        "layout": "col-center",
+        "x": 410,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "b0d5db296572969c",
+        "type": "rbe",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 690,
+        "y": 540,
+        "wires": [
+            [
+                "071f42b8aee208c9"
+            ]
+        ]
+    },
+    {
+        "id": "797ae9bebbec83d8",
+        "type": "addFirebase",
+        "z": "15a1fe22b8720b88",
+        "firebaseCertificate": "18a308963601c339",
+        "client_email": "",
+        "private_key": "",
+        "data": "",
+        "childpath": "Vento",
+        "propertyType": "str",
+        "method": "push",
+        "newchildpath": "",
+        "x": 1120,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "13bee3e52bf809ab",
+        "type": "function",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "func": "const varr = msg.payload.toString();\nmsg.payload = varr;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 60,
+        "wires": [
+            [
+                "4f7049c0474a6689"
+            ]
+        ]
+    },
+    {
+        "id": "f8c79db8410be861",
+        "type": "function",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "func": "const varr = msg.payload.toString();\nmsg.payload = varr;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 200,
+        "wires": [
+            [
+                "78801b38ef92801f"
+            ]
+        ]
+    },
+    {
+        "id": "6c7ae83fe2f1c559",
+        "type": "function",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "func": "\nconst varr = msg.payload.toString();\nmsg.payload = varr;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 340,
+        "wires": [
+            [
+                "a171ca89afbd6578"
+            ]
+        ]
+    },
+    {
+        "id": "55eb0ed23657e8ab",
+        "type": "addFirebase",
+        "z": "15a1fe22b8720b88",
+        "firebaseCertificate": "18a308963601c339",
+        "client_email": "",
+        "private_key": "",
+        "data": "",
+        "childpath": "Temperatura",
+        "propertyType": "str",
+        "method": "push",
+        "newchildpath": "",
+        "x": 1120,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4211b187d87bd7cf",
+        "type": "addFirebase",
+        "z": "15a1fe22b8720b88",
+        "firebaseCertificate": "18a308963601c339",
+        "client_email": "",
+        "private_key": "",
+        "data": "",
+        "childpath": "Iluminacao",
+        "propertyType": "str",
+        "method": "push",
+        "newchildpath": "",
+        "x": 1120,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f7049c0474a6689",
+        "type": "delay",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "15",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 880,
+        "y": 60,
+        "wires": [
+            [
+                "797ae9bebbec83d8"
+            ]
+        ]
+    },
+    {
+        "id": "78801b38ef92801f",
+        "type": "delay",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "15",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 880,
+        "y": 200,
+        "wires": [
+            [
+                "55eb0ed23657e8ab"
+            ]
+        ]
+    },
+    {
+        "id": "a171ca89afbd6578",
+        "type": "delay",
+        "z": "15a1fe22b8720b88",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "15",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "x": 900,
+        "y": 340,
+        "wires": [
+            [
+                "4211b187d87bd7cf"
+            ]
+        ]
+    },
+    {
+        "id": "ac4cdef851c45bc4",
+        "type": "serial-port",
+        "z": "15a1fe22b8720b88",
+        "serialport": "COM3",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "1000",
+        "bin": "false",
+        "out": "time",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "17e66e49.ae383a",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.mqttdashboard.com",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "2b1aa610.3e3f3a",
+        "type": "ui_group",
+        "name": "Informações do clima",
+        "tab": "4e69e665.ae5f18",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "18a308963601c339",
+        "type": "firebaseCertificate",
+        "firebaseurl": "poasmartcity-default-rtdb",
+        "loginType": "none"
+    },
+    {
+        "id": "4e69e665.ae5f18",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
