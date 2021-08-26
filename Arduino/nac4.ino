@@ -25,7 +25,7 @@ unsigned int RPM = 0;
 //Configurando o setup
 void setup(){
 	//Medida alta para a tranmissão de dados
-	Serial.begin(115200);
+	Serial.begin(9600);
 	pinMode(ldr, INPUT);
 	pinMode(tmp, INPUT);
 	pinMode(vnt, INPUT);
