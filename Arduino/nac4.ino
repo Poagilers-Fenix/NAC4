@@ -10,14 +10,14 @@ StaticJsonDocument<TAMANHO> json;
 //Definindo as variáveis 
 int Vo;
 float R1 = 10000;
-float logR2, R2, L2, T, Tc, Tf, temp, light, wind;
-float a = 0.6904626097e-03, b = 2.890757430e-04, c = 0.01366717388e-07; 
-
+float logR2, R2, L2, T, Tc, Tf, temp, light, wind, f;
+float a = 0.6904626097e-03, b = 2.890757430e-04, c = 0.01366717388e-07;
+volatile unsigned long cont = 0;
 //Portas do arduino
 int ldr = A0;
 int tmp = A1;
 int vnt = 2;
-
+long freeze;
 //Configurando o setup
 void setup(){
 	//Medida alta para a tranmissão de dados
@@ -25,6 +25,7 @@ void setup(){
 	pinMode(ldr, INPUT);
 	pinMode(tmp, INPUT);
 	pinMode(vnt, INPUT);
+	digitalWrite(2, HIGH);
 }
 
 
@@ -40,7 +41,7 @@ void loop() {
 	json["vento"] = round(wind);	
 	//Constroi o Json e manda para o serial 
 	serializeJson(json, Serial);
-	delay(3000);
+	delay(350);
 }
 
 //Função que le temperatura
@@ -51,13 +52,6 @@ float readTemp(int tmp){
 	T = (1.0 / (a + b*logR2 + c*logR2*logR2*logR2));
 	Tc = T - 273.15; 
 	return Tc;
-}
-
-//Printar na serial a temperatura
-void printTempSerial(float Tc){
-	Serial.print("Temp.: ");
-	Serial.print(round(Tc));
-	Serial.println(" C");
 }
 
 //Função que le a luminosidade
@@ -74,27 +68,17 @@ float readLight(int ldr) {
 }
 
 //Função que le a velocidade do vento
-float readWind(int vtn) {
-	unsigned long frequency;
-	int pulseHigh = pulseIn(vtn, HIGH);
-	int pulseLow = pulseIn(vtn, LOW);
-	float pulseTotal = pulseHigh + pulseLow;
-	frequency = 1000000/pulseTotal;
-	return frequency;
+float readWind(int vnt) {
+	cont = 0;
+	attachInterrupt(digitalPinToInterrupt(vnt), interrupcaoPino2, RISING);
+	freeze = millis();
+	while (millis() < freeze + 1000) {}
+	return cont;
 }
 
-//Printar na serial a velocidade do vento
-void printWindSerial(float wind){
-	Serial.print("Freq.: ");
-	Serial.print(round(wind));
-	Serial.println(" Hz");
-}
-
-//Printar na serial a luminosidade
-void printLightSerial(float light){
-	Serial.print("Lumin.: ");
-	Serial.print(light);
-	Serial.println(" lux");
+void interrupcaoPino2(){
+	digitalWrite(vnt, !digitalRead(vnt));
+	cont++;
 }
 
 
