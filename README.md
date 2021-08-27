@@ -49,3 +49,6 @@ For the Poá Smart City project works correctly, you must have followed the prog
 * [youtube - JSON Data in Node Red](https://www.youtube.com/watch?v=24ZY3CEsiow&list=WL&index=3&t=148s)
 * [Arduino: Frequencímetro TIAGO HENRIQUE](http://microcontrolandos.blogspot.com/2013/01/frquencimetro-com-arduino.html)
 * [Rajkumar2506 in CircuitsArduino](https://www.instructables.com/Arduino-Frequency-Counter/)
+* [node-red-contrib-firebase](https://flows.nodered.org/node/node-red-contrib-firebase)
+* [node-red-contrib-firebase-admin](https://www.npmjs.com/package/node-red-contrib-firebase-admin)
+* [Primeiros passos: gravar, testar e implantar](https://firebase.google.com/docs/functions/get-started?hl=pt-br)
