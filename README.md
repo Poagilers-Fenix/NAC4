@@ -51,7 +51,7 @@
 
   ## Video link
 
-  <a href="https://youtu.be/uaH2S0pGXAE">Clique aqui</a> para acessar o vídeo de demonstração de funcionamento do sistema.
+  <a href="https://youtu.be/uaH2S0pGXAE">Click here</a> to access the demonstration video of the system.
 
   
 
